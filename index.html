@@ -64,13 +64,15 @@
     .summary-card.highlight { border-color: #45658f; background: var(--blue-soft); }
     .summary-card.highlight strong { color: var(--blue); }
     .site-footer { margin-top: 12px; border-top: 1px solid #3b4d65; background: linear-gradient(115deg, #202d40, #1a2230 65%, #1c2736); }
-    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0; }
-    .developer { display: flex; align-items: center; gap: 11px; }
-    .developer-icon { display: grid; width: 40px; height: 40px; place-items: center; border: 1px solid #59769b; border-radius: 12px; background: #2a3b52; color: #a9ccff; font-size: .85rem; font-weight: 800; }
-    .developer-label { display: block; margin-bottom: 3px; color: var(--muted); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; }
-    .developer-name { font-size: .9rem; font-weight: 700; }
-    .contact-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 13px; border: 1px solid #4a6382; border-radius: 9px; background: #25364c; color: #c8ddfb; font-size: .84rem; font-weight: 650; text-decoration: none; transition: background .15s, border-color .15s; }
+    .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 24px 0 20px; text-align: center; }
+    .developer { display: flex; flex-direction: column; align-items: center; gap: 9px; }
+    .developer-icon { display: grid; width: 48px; height: 48px; place-items: center; border: 1px solid #59769b; border-radius: 50%; background: #2a3b52; color: #a9ccff; font-size: .92rem; font-weight: 800; box-shadow: 0 5px 16px #0a101a55; }
+    .developer-label { display: block; margin-bottom: 4px; color: var(--muted); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; }
+    .developer-name { font-size: 1rem; font-weight: 750; }
+    .contact-link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; max-width: 100%; padding: 10px 14px; border: 1px solid #4a6382; border-radius: 9px; background: #25364c; color: #c8ddfb; font-size: .84rem; font-weight: 650; text-decoration: none; overflow-wrap: anywhere; transition: background .15s, border-color .15s; }
     .contact-link:hover { border-color: #7395bf; background: #2c4260; }
+    .footer-divider { width: min(100%, 340px); height: 1px; background: #3b4d65; }
+    .footer-copy { margin: 0; color: #7f8da2; font-size: .72rem; }
     @media (max-width: 700px) {
       .page { padding-top: 20px; }
       .item { grid-template-columns: 1fr 1fr 38px; gap: 10px; }
@@ -90,8 +92,7 @@
       .product-options { gap: 7px; }
       .product-option { min-height: 58px; gap: 8px; padding: 8px; }
       .option-name { font-size: .82rem; }
-      .footer-inner { align-items: stretch; flex-direction: column; gap: 13px; padding: 16px 0; }
-      .contact-link { justify-content: center; width: 100%; overflow-wrap: anywhere; }
+      .footer-inner { gap: 12px; padding: 20px 0 16px; }
     }
     @media (max-width: 360px) {
       .product-options { grid-template-columns: 1fr; }
@@ -122,8 +123,13 @@
   </main>
   <footer class="site-footer">
     <div class="footer-inner">
-      <div class="developer"><span class="developer-icon" aria-hidden="true">ML</span><div><span class="developer-label">Developer</span><div class="developer-name">Md Lukman Hussen</div></div></div>
-      <a class="contact-link" href="mailto:lukmanverse.6@gmail.com"><span aria-hidden="true">✉</span> lukmanverse.6@gmail.com</a>
+      <div class="developer">
+        <span class="developer-icon" aria-hidden="true">ML</span>
+        <div><span class="developer-label">Developed by</span><div class="developer-name">Md Lukman Hussen</div></div>
+      </div>
+      <a class="contact-link" href="mailto:lukmanverse.6@gmail.com"><span aria-hidden="true">✉</span><span>lukmanverse.6@gmail.com</span></a>
+      <div class="footer-divider" aria-hidden="true"></div>
+      <p class="footer-copy">Bread Carton Calculator</p>
     </div>
   </footer>
 
