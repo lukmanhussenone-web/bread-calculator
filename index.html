@@ -18,44 +18,58 @@
     }
     * { box-sizing: border-box; }
     body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; background: var(--canvas); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-    button, input, select { font: inherit; }
+    button, input { font: inherit; }
     button { cursor: pointer; }
     .site-header { border-bottom: 1px solid var(--line); background: #1c221e; }
     .header-inner, .page, .footer-inner { width: min(940px, calc(100% - 32px)); margin: 0 auto; }
-    .header-inner { min-height: 66px; display: flex; align-items: center; gap: 10px; font-weight: 750; }
-    .bread-mark { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 10px; background: #2b352d; font-size: 20px; }
+    .header-inner { min-height: 68px; display: flex; align-items: center; gap: 11px; font-size: 1.02rem; font-weight: 750; letter-spacing: -.02em; }
+    .bread-mark { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid #3c4b40; border-radius: 12px; background: linear-gradient(145deg, #35483a, #252f28); font-size: 20px; box-shadow: 0 4px 14px #0e120f66; }
     .page { flex: 1; padding: 32px 0 42px; }
-    .calculator { overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
-    .card-head { padding: 18px 20px; border-bottom: 1px solid var(--line); }
-    .card-head h1 { margin: 0; font-size: 1.2rem; }
-    .picker { display: flex; align-items: end; gap: 10px; padding: 18px 20px; }
-    .picker-field { flex: 1; min-width: 0; }
-    .picker label, .field label { display: block; margin-bottom: 6px; color: var(--muted); font-size: .75rem; font-weight: 700; }
-    select, .field input { width: 100%; height: 42px; padding: 0 10px; border: 1px solid var(--line); border-radius: 8px; outline: none; background: #171d19; color: var(--ink); }
-    select:focus, .field input:focus { border-color: var(--green); }
-    .add-button { height: 42px; padding: 0 14px; border: 0; border-radius: 8px; background: #315a3b; color: #f5fff6; font-weight: 700; white-space: nowrap; }
-    .add-button:hover:not(:disabled) { background: #3b6b47; }
-    .add-button:disabled { cursor: not-allowed; opacity: .5; }
-    .items { padding: 0 20px; }
+    .calculator { overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); box-shadow: 0 18px 48px #080b0940; }
+    .card-head { padding: 20px 22px 16px; border-bottom: 1px solid var(--line); }
+    .card-head h1 { margin: 0; font-size: 1.22rem; letter-spacing: -.025em; }
+    .picker { padding: 18px 22px 20px; }
+    .picker-title { margin: 0 0 12px; color: var(--muted); font-size: .78rem; font-weight: 700; }
+    .product-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+    .product-option { min-height: 62px; display: flex; align-items: center; gap: 11px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 11px; background: #1a201c; cursor: pointer; transition: border-color .15s, background .15s, transform .15s; }
+    .product-option:hover { border-color: #58705d; transform: translateY(-1px); }
+    .product-option.selected { border-color: #709b78; background: #26352a; }
+    .product-option.added { opacity: .48; cursor: default; }
+    .product-option.added:hover { border-color: var(--line); transform: none; }
+    .product-option input { width: 17px; height: 17px; margin: 0; accent-color: var(--green); flex: 0 0 auto; }
+    .option-name { display: block; font-size: .9rem; font-weight: 700; }
+    .option-capacity { display: block; margin-top: 3px; color: var(--muted); font-size: .74rem; }
+    .picker-actions { display: flex; justify-content: flex-end; margin-top: 14px; }
+    .add-button { min-height: 42px; padding: 0 16px; border: 0; border-radius: 9px; background: #477a50; color: #f5fff6; font-weight: 750; transition: background .15s, transform .15s; }
+    .add-button:hover:not(:disabled) { background: #578b60; transform: translateY(-1px); }
+    .add-button:disabled { cursor: not-allowed; opacity: .45; }
+    .items { padding: 0 22px; }
     .item { display: grid; grid-template-columns: minmax(150px, 1.2fr) minmax(95px, .7fr) minmax(115px, .8fr) minmax(145px, 1fr) 38px; align-items: end; gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); }
-    .product-name { min-height: 42px; display: flex; align-items: center; font-weight: 700; }
+    .field label { display: block; margin-bottom: 6px; color: var(--muted); font-size: .73rem; font-weight: 700; }
+    .field input { width: 100%; height: 42px; padding: 0 10px; border: 1px solid var(--line); border-radius: 8px; outline: none; background: #171d19; color: var(--ink); }
+    .field input:focus { border-color: var(--green); }
+    .product-name, .capacity-value { min-height: 42px; display: flex; align-items: center; font-weight: 700; }
+    .capacity-value { color: var(--muted); font-weight: 600; }
     .result { min-height: 42px; display: flex; align-items: center; gap: 8px; padding: 0 10px; border-radius: 8px; background: var(--mint); font-weight: 700; white-space: nowrap; }
     .carton-count { color: var(--green); }
     .result small { color: var(--muted); font-size: .78rem; }
     .remove-button { width: 38px; height: 38px; margin-bottom: 2px; border: 1px solid var(--line); border-radius: 8px; background: transparent; color: var(--muted); font-size: 1.15rem; }
     .remove-button:hover { background: #422d2b; color: #ffb7a9; }
-    .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 16px 20px 20px; }
+    .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 16px 22px 22px; }
     .summary[hidden], .items[hidden] { display: none; }
     .summary-card { padding: 13px 15px; border: 1px solid var(--line); border-radius: 10px; background: #1a201c; }
     .summary-card span { display: block; color: var(--muted); font-size: .76rem; font-weight: 650; }
     .summary-card strong { display: block; margin-top: 4px; font-size: 1.4rem; }
     .summary-card.highlight { border-color: #3d5a43; background: var(--mint); }
     .summary-card.highlight strong { color: var(--green); }
-    .site-footer { border-top: 1px solid var(--line); background: #1c221e; }
-    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 0; color: var(--muted); font-size: .85rem; }
-    .footer-inner strong { color: var(--ink); font-weight: 650; }
-    .footer-inner a { color: var(--green); text-decoration: none; }
-    .footer-inner a:hover { text-decoration: underline; }
+    .site-footer { margin-top: 12px; border-top: 1px solid #3c4a40; background: radial-gradient(ellipse at 15% 0%, #2d3e31 0, #202822 45%, #1b211d 100%); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0; }
+    .developer { display: flex; align-items: center; gap: 11px; }
+    .developer-icon { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid #4a614e; border-radius: 50%; background: #2b3b2e; color: var(--green); font-size: .85rem; font-weight: 800; }
+    .developer-label { display: block; margin-bottom: 3px; color: var(--muted); font-size: .69rem; letter-spacing: .08em; text-transform: uppercase; }
+    .developer-name { font-size: .9rem; font-weight: 700; }
+    .contact-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 13px; border: 1px solid #49634d; border-radius: 9px; background: #26352a; color: #c4e3c9; font-size: .84rem; font-weight: 650; text-decoration: none; transition: background .15s; }
+    .contact-link:hover { background: #314636; }
     @media (max-width: 700px) {
       .page { padding-top: 20px; }
       .item { grid-template-columns: 1fr 1fr 38px; gap: 10px; }
@@ -64,13 +78,15 @@
       .item .remove-button { grid-column: 3; grid-row: 1; align-self: end; }
       .summary { grid-template-columns: 1fr; }
     }
-    @media (max-width: 430px) {
-      .header-inner, .page, .footer-inner { width: calc(100% - 20px); }
-      .card-head { padding: 15px; }
-      .picker { padding: 14px 15px; }
-      .items { padding: 0 15px; }
-      .summary { padding: 14px 15px 15px; }
-      .add-button { padding: 0 10px; font-size: .85rem; }
+    @media (max-width: 480px) {
+      .header-inner, .page, .footer-inner { width: calc(100% - 22px); }
+      .card-head { padding: 16px; }
+      .picker { padding: 15px 16px 17px; }
+      .items { padding: 0 16px; }
+      .summary { padding: 14px 16px 16px; }
+      .product-options { gap: 7px; }
+      .product-option { min-height: 58px; gap: 8px; padding: 8px; }
+      .option-name { font-size: .82rem; }
       .footer-inner { align-items: flex-start; flex-direction: column; }
     }
   </style>
@@ -83,11 +99,9 @@
     <section class="calculator" aria-labelledby="calculator-title">
       <header class="card-head"><h1 id="calculator-title">Packing list</h1></header>
       <div class="picker">
-        <div class="picker-field">
-          <label for="bread-select">Choose bread</label>
-          <select id="bread-select"><option value="">Select a bread type…</option></select>
-        </div>
-        <button class="add-button" id="add-item" type="button" disabled>Add</button>
+        <p class="picker-title">Choose bread types</p>
+        <div class="product-options" id="product-options"></div>
+        <div class="picker-actions"><button class="add-button" id="add-items" type="button" disabled>Add selected</button></div>
       </div>
       <div class="items" id="items" aria-live="polite" hidden></div>
       <section class="summary" id="summary" aria-label="Packing totals" hidden>
@@ -98,14 +112,17 @@
     </section>
   </main>
   <footer class="site-footer">
-    <div class="footer-inner"><strong>Developer: Md Lukman Hussen</strong><a href="mailto:lukmanverse.6@gmail.com">lukmanverse.6@gmail.com</a></div>
+    <div class="footer-inner">
+      <div class="developer"><span class="developer-icon" aria-hidden="true">ML</span><div><span class="developer-label">Developer</span><div class="developer-name">Md Lukman Hussen</div></div></div>
+      <a class="contact-link" href="mailto:lukmanverse.6@gmail.com"><span aria-hidden="true">✉</span> lukmanverse.6@gmail.com</a>
+    </div>
   </footer>
 
   <template id="item-template">
     <div class="item">
       <div class="field name-field"><label>Bread</label><div class="product-name"></div></div>
       <div class="field"><label>Units</label><input class="units" type="number" min="0" step="1" inputmode="numeric" aria-label="Number of units"></div>
-      <div class="field"><label>Per carton</label><input class="capacity" type="number" min="1" step="1" inputmode="numeric" aria-label="Units per carton"></div>
+      <div class="field"><label>Per carton</label><div class="capacity-value"></div></div>
       <div class="field result-field"><label>Result</label><div class="result"><span class="carton-count">0 cartons</span><small>·</small><span class="leftover-count">0 left</span></div></div>
       <button class="remove-button" type="button" aria-label="Remove bread type">×</button>
     </div>
@@ -124,74 +141,100 @@
       ];
       const list = document.querySelector('#items');
       const summary = document.querySelector('#summary');
-      const select = document.querySelector('#bread-select');
-      const addButton = document.querySelector('#add-item');
+      const options = document.querySelector('#product-options');
+      const addButton = document.querySelector('#add-items');
       const template = document.querySelector('#item-template');
       const number = value => Math.max(0, Math.floor(Number(value) || 0));
+      const rows = new Map();
 
-      products.forEach((product, index) => {
-        const option = document.createElement('option');
-        option.value = String(index);
-        option.textContent = `${product.name} — ${product.capacity} per carton`;
-        select.append(option);
-      });
-
-      function updatePicker() {
-        const selected = new Set([...list.querySelectorAll('.item')].map(row => row.dataset.product));
-        [...select.options].forEach(option => {
-          if (option.value) option.disabled = selected.has(option.value);
+      function renderOptions() {
+        options.replaceChildren();
+        products.forEach((product, index) => {
+          const label = document.createElement('label');
+          label.className = 'product-option';
+          label.dataset.product = String(index);
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.value = String(index);
+          checkbox.setAttribute('aria-label', `Select ${product.name}`);
+          const text = document.createElement('span');
+          text.innerHTML = `<span class="option-name"></span><span class="option-capacity"></span>`;
+          text.querySelector('.option-name').textContent = product.name;
+          text.querySelector('.option-capacity').textContent = `${product.capacity} per carton`;
+          checkbox.addEventListener('change', () => {
+            label.classList.toggle('selected', checkbox.checked);
+            updateAddButton();
+          });
+          label.append(checkbox, text);
+          options.append(label);
         });
-        if (select.value && selected.has(select.value)) select.value = '';
-        addButton.disabled = select.value === '';
+      }
+
+      function updateAddButton() {
+        addButton.disabled = !options.querySelector('input:checked');
+      }
+
+      function updateOptionStates() {
+        options.querySelectorAll('.product-option').forEach(label => {
+          const added = rows.has(Number(label.dataset.product));
+          const checkbox = label.querySelector('input');
+          label.classList.toggle('added', added);
+          checkbox.disabled = added;
+          if (added) {
+            checkbox.checked = false;
+            label.classList.remove('selected');
+          }
+        });
+        updateAddButton();
       }
 
       function calculate() {
         let totalUnits = 0;
         let totalCartons = 0;
         let totalLeftover = 0;
-        list.querySelectorAll('.item').forEach(row => {
+        rows.forEach((row, index) => {
           const units = number(row.querySelector('.units').value);
-          const capacity = number(row.querySelector('.capacity').value);
-          const cartons = capacity > 0 ? Math.floor(units / capacity) : 0;
-          const leftover = capacity > 0 ? units % capacity : units;
+          const capacity = products[index].capacity;
+          const cartons = Math.floor(units / capacity);
+          const leftover = units % capacity;
           row.querySelector('.carton-count').textContent = `${cartons} ${cartons === 1 ? 'carton' : 'cartons'}`;
           row.querySelector('.leftover-count').textContent = `${leftover} left`;
           totalUnits += units;
           totalCartons += cartons;
           totalLeftover += leftover;
         });
-        const hasItems = list.querySelector('.item') !== null;
+        const hasItems = rows.size > 0;
         list.hidden = !hasItems;
         summary.hidden = !hasItems;
         document.querySelector('#total-units').textContent = totalUnits.toLocaleString();
         document.querySelector('#total-cartons').textContent = totalCartons.toLocaleString();
         document.querySelector('#total-leftover').textContent = totalLeftover.toLocaleString();
-        updatePicker();
       }
 
       function addProduct(index) {
         const product = products[index];
-        if (!product || list.querySelector(`[data-product="${index}"]`)) return;
+        if (!product || rows.has(index)) return;
         const row = template.content.firstElementChild.cloneNode(true);
-        row.dataset.product = String(index);
         row.querySelector('.product-name').textContent = product.name;
         row.querySelector('.units').value = '1';
-        row.querySelector('.capacity').value = String(product.capacity);
+        row.querySelector('.capacity-value').textContent = product.capacity;
         row.addEventListener('input', calculate);
         row.querySelector('.remove-button').addEventListener('click', () => {
           row.remove();
+          rows.delete(index);
+          updateOptionStates();
           calculate();
         });
+        rows.set(index, row);
         list.append(row);
-        calculate();
       }
 
-      select.addEventListener('change', updatePicker);
+      renderOptions();
       addButton.addEventListener('click', () => {
-        if (select.value === '') return;
-        addProduct(Number(select.value));
-        select.value = '';
-        updatePicker();
+        const selected = [...options.querySelectorAll('input:checked')].map(input => Number(input.value));
+        selected.forEach(addProduct);
+        updateOptionStates();
+        calculate();
       });
     })();
   </script>
