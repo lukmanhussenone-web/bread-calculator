@@ -16,17 +16,10 @@
       --green: #245c3e;
       --green-dark: #19452e;
       --mint: #eaf3e9;
-      --orange: #e79849;
       --shadow: 0 16px 45px rgba(34, 48, 37, .08);
     }
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: var(--canvas);
-      color: var(--ink);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
+    body { margin: 0; min-height: 100vh; background: var(--canvas); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
     button, input { font: inherit; }
     button { cursor: pointer; }
     .page { width: min(1040px, calc(100% - 36px)); margin: 0 auto; padding: 48px 0 64px; }
@@ -34,13 +27,12 @@
     .bread-mark { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 14px; background: #e9eddc; font-size: 23px; letter-spacing: 0; }
     h1 { margin: 0; font-size: clamp(2.15rem, 5vw, 3.65rem); line-height: 1.04; letter-spacing: -.055em; }
     .intro { max-width: 620px; margin: 14px 0 30px; color: var(--muted); font-size: 1.05rem; line-height: 1.65; }
-    .calculator { overflow: hidden; border: 1px solid rgba(230,229,220,.9); border-radius: 24px; background: var(--paper); box-shadow: var(--shadow); }
+    .calculator { overflow: hidden; border: 1px solid rgba(230,229,220,.9); border-radius: 24px; background: var(--paper); box-shadow: 0 16px 45px rgba(34, 48, 37, .08); }
     .card-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 24px 28px; border-bottom: 1px solid var(--line); }
     .card-head h2 { margin: 0; font-size: 1.1rem; letter-spacing: -.02em; }
     .card-head p { margin: 5px 0 0; color: var(--muted); font-size: .88rem; }
-    .add-button, .primary-button { border: 0; border-radius: 12px; background: var(--green); color: #fff; font-weight: 750; transition: background .15s, transform .15s; }
-    .add-button { padding: 11px 15px; white-space: nowrap; }
-    .add-button:hover, .primary-button:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .add-button { border: 0; border-radius: 12px; background: var(--green); color: #fff; font-weight: 750; padding: 11px 15px; white-space: nowrap; transition: background .15s, transform .15s; }
+    .add-button:hover { background: var(--green-dark); transform: translateY(-1px); }
     .items { padding: 8px 28px 20px; }
     .item { display: grid; grid-template-columns: minmax(150px, 1.25fr) minmax(110px, .75fr) minmax(110px, .75fr) minmax(150px, 1fr) 40px; align-items: end; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--line); }
     .field label { display: block; margin: 0 0 8px; color: var(--muted); font-size: .76rem; font-weight: 750; letter-spacing: .055em; text-transform: uppercase; }
@@ -51,7 +43,6 @@
     .result small { color: var(--muted); font-size: .78rem; font-weight: 600; }
     .remove-button { width: 40px; height: 40px; margin-bottom: 3px; border: 1px solid var(--line); border-radius: 10px; background: transparent; color: #7a837d; font-size: 1.2rem; }
     .remove-button:hover { border-color: #e7b5a9; background: #fff4f1; color: #a53d2a; }
-    .empty { padding: 35px 12px; color: var(--muted); text-align: center; }
     .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 28px 26px; }
     .summary-card { padding: 16px 18px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
     .summary-card span { display: block; color: var(--muted); font-size: .8rem; font-weight: 700; }
@@ -95,7 +86,7 @@
         <div class="summary-card"><span>Units left over</span><strong id="total-leftover">0</strong></div>
       </section>
     </section>
-    <p class="note">Example: 100 XL breads packed 24 per carton = 4 full cartons and 4 units left over. Your list is saved on this device.</p>
+    <p class="note">Starter list includes your eight bread types, each set to 1 unit. Change quantities or carton sizes anytime. Your list is saved on this device.</p>
   </main>
 
   <template id="item-template">
@@ -109,9 +100,19 @@
   </template>
   <script>
     (() => {
-      const STORAGE_KEY = 'bread-carton-calculator-v1';
+      const STORAGE_KEY = 'bread-carton-calculator-v2';
       const list = document.querySelector('#items');
       const template = document.querySelector('#item-template');
+      const defaults = [
+        { name: 'Any Time Bread', capacity: '44' },
+        { name: 'S Bread', capacity: '80' },
+        { name: 'Banana Bread', capacity: '16' },
+        { name: 'Sandwich Bread', capacity: '16' },
+        { name: 'Morning Bread', capacity: '60' },
+        { name: 'Fruit Bread', capacity: '24' },
+        { name: 'White Bread', capacity: '29' },
+        { name: 'XL Bread', capacity: '24' }
+      ];
       const number = value => Math.max(0, Math.floor(Number(value) || 0));
 
       function save() {
@@ -147,7 +148,7 @@
       function addItem(data = {}) {
         const row = template.content.firstElementChild.cloneNode(true);
         row.querySelector('.product-name').value = data.name ?? '';
-        row.querySelector('.units').value = data.units ?? '';
+        row.querySelector('.units').value = data.units ?? '1';
         row.querySelector('.capacity').value = data.capacity ?? '';
         row.addEventListener('input', calculate);
         row.querySelector('.remove-button').addEventListener('click', () => {
@@ -156,18 +157,32 @@
           calculate();
         });
         list.append(row);
+      }
+
+      function loadItems() {
+        let saved = null;
+        try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch (_) { /* Use defaults if saved data is invalid. */ }
+        if (!Array.isArray(saved)) {
+          let oldSaved = null;
+          try { oldSaved = JSON.parse(localStorage.getItem('bread-carton-calculator-v1') || 'null'); } catch (_) { /* Ignore invalid previous data. */ }
+          saved = Array.isArray(oldSaved) ? oldSaved : [];
+        }
+        const items = [...saved];
+        defaults.forEach(product => {
+          const existing = items.find(item => (item.name || '').trim().toLowerCase() === product.name.toLowerCase());
+          if (existing) existing.capacity = product.capacity;
+          else items.push({ ...product, units: '1' });
+        });
+        items.forEach(addItem);
         calculate();
       }
 
       document.querySelector('#add-item').addEventListener('click', () => {
         addItem();
+        calculate();
         list.lastElementChild.querySelector('.product-name').focus();
       });
-      try {
-        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-        if (Array.isArray(saved) && saved.length) saved.forEach(addItem);
-        else addItem({ name: 'XL Bread', units: '100', capacity: '24' });
-      } catch (_) { addItem({ name: 'XL Bread', units: '100', capacity: '24' }); }
+      loadItems();
     })();
   </script>
 </body>
