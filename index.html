@@ -46,17 +46,18 @@
     .add-button:disabled { cursor: not-allowed; opacity: .45; }
     .items { padding: 0 20px; }
     .item { display: grid; grid-template-columns: minmax(150px, 1.2fr) minmax(95px, .7fr) minmax(115px, .8fr) minmax(145px, 1fr) 38px; align-items: end; gap: 11px; padding: 12px 0; border-top: 1px solid var(--line); }
+    .field { min-width: 0; }
     .field label { display: block; margin-bottom: 5px; color: var(--muted); font-size: .72rem; font-weight: 700; }
     .field input { width: 100%; height: 40px; padding: 0 10px; border: 1px solid #c3d0df; border-radius: 8px; outline: none; background: #fff; color: var(--ink); }
     .field input:focus { border-color: #6ea2dc; box-shadow: 0 0 0 3px #4c8edc1c; }
     .product-name, .capacity-value { min-height: 40px; display: flex; align-items: center; font-weight: 700; }
     .capacity-value { color: var(--muted); font-weight: 600; }
-    .result { min-height: 40px; display: flex; align-items: center; gap: 8px; padding: 0 9px; border-radius: 8px; background: var(--blue-soft); font-weight: 700; white-space: nowrap; }
+    .result { min-height: 40px; display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; gap: 8px; padding: 0 9px; border-radius: 8px; background: var(--blue-soft); font-weight: 700; white-space: nowrap; }
     .carton-count { color: var(--blue); }
     .result small { color: var(--muted); font-size: .78rem; }
     .remove-button { width: 36px; height: 36px; margin-bottom: 2px; border: 1px solid var(--line); border-radius: 8px; background: #f8fafd; color: var(--muted); font-size: 1.1rem; }
     .remove-button:hover { border-color: #e4b7c0; background: #fff4f5; color: #a63d54; }
-    .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; padding: 14px 20px 18px; }
+    .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-top: 14px; padding: 14px 20px 18px; }
     .summary[hidden], .items[hidden] { display: none; }
     .summary-card { padding: 11px 14px; border: 1px solid var(--line); border-radius: 9px; background: #f1f5fa; }
     .summary-card span { display: block; color: var(--muted); font-size: .75rem; font-weight: 650; }
@@ -76,7 +77,8 @@
       .item .name-field { grid-column: 1 / 3; }
       .item .result-field { grid-column: 1 / 3; }
       .item .remove-button { grid-column: 3; grid-row: 1; align-self: end; }
-      .summary { grid-template-columns: 1fr; }
+      .result { flex-direction: row; flex-wrap: nowrap; }
+      .summary { grid-template-columns: 1fr; margin-top: 14px; }
     }
     @media (max-width: 480px) {
       .header-inner, .page, .footer-inner { width: calc(100% - 22px); }
@@ -85,17 +87,18 @@
       .card-head { padding: 14px; }
       .picker { padding: 13px 14px 15px; }
       .items { padding: 0 14px; }
-      .summary { padding: 12px 14px 14px; }
+      .summary { margin-top: 14px; padding: 12px 14px 14px; }
       .product-options { gap: 7px; }
       .product-option { min-height: 54px; gap: 8px; padding: 7px; }
       .option-name { font-size: .8rem; }
       .footer-inner { gap: 4px; padding: 8px 0 7px; }
       .developer-name, .contact-link { font-size: .9rem; }
+      .result { gap: 6px; padding: 0 8px; font-size: .82rem; }
     }
     @media (max-width: 360px) {
       .product-options { grid-template-columns: 1fr; }
       .picker-actions .add-button { width: 100%; }
-      .result { gap: 6px; padding: 0 8px; font-size: .84rem; }
+      .result { gap: 5px; padding: 0 6px; font-size: .78rem; }
     }
   </style>
 </head>
@@ -201,11 +204,12 @@
         let totalUnits = 0;
         let totalCartons = 0;
         let totalLeftover = 0;
-        rows.forEach((row, index) => {
+        [...rows.entries()].forEach(([index, row], position) => {
           const units = number(row.querySelector('.units').value);
           const capacity = products[index].capacity;
           const cartons = Math.floor(units / capacity);
           const leftover = units % capacity;
+          row.querySelector('.product-name').textContent = `${position + 1}. ${products[index].name}`;
           row.querySelector('.carton-count').textContent = `${cartons} ${cartons === 1 ? 'carton' : 'cartons'}`;
           row.querySelector('.leftover-count').textContent = `${leftover} left`;
           totalUnits += units;
