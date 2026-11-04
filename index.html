@@ -10,41 +10,52 @@
       color-scheme: dark;
       --ink: #edf2ed;
       --muted: #9aa79d;
-      --paper: #202723;
+      --panel: #202723;
       --canvas: #171c19;
       --line: #343e37;
       --green: #84bd91;
-      --green-dark: #6da57a;
       --mint: #293a2e;
     }
     * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; background: var(--canvas); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-    button, input { font: inherit; }
+    body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; background: var(--canvas); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    button, input, select { font: inherit; }
     button { cursor: pointer; }
-    .page { width: min(1050px, calc(100% - 32px)); margin: 0 auto; padding: 32px 0 48px; }
-    .topline { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; color: var(--green); font-size: .9rem; font-weight: 750; }
+    .site-header { border-bottom: 1px solid var(--line); background: #1c221e; }
+    .header-inner, .page, .footer-inner { width: min(940px, calc(100% - 32px)); margin: 0 auto; }
+    .header-inner { min-height: 66px; display: flex; align-items: center; gap: 10px; font-weight: 750; }
     .bread-mark { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 10px; background: #2b352d; font-size: 20px; }
-    .calculator { overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--paper); }
-    .card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 20px; border-bottom: 1px solid var(--line); }
-    .card-head h1 { margin: 0; font-size: 1.15rem; }
-    .add-button { border: 0; border-radius: 9px; background: #315a3b; color: #f5fff6; font-weight: 700; padding: 10px 13px; white-space: nowrap; }
-    .add-button:hover { background: #3b6b47; }
-    .items { padding: 4px 20px 16px; }
-    .item { display: grid; grid-template-columns: minmax(150px, 1.25fr) minmax(100px, .7fr) minmax(115px, .8fr) minmax(145px, 1fr) 38px; align-items: end; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
-    .field label { display: block; margin: 0 0 6px; color: var(--muted); font-size: .72rem; font-weight: 700; }
-    .field input { width: 100%; height: 42px; padding: 0 10px; border: 1px solid var(--line); border-radius: 8px; outline: none; background: #171d19; color: var(--ink); }
-    .field input:focus { border-color: var(--green); }
+    .page { flex: 1; padding: 32px 0 42px; }
+    .calculator { overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
+    .card-head { padding: 18px 20px; border-bottom: 1px solid var(--line); }
+    .card-head h1 { margin: 0; font-size: 1.2rem; }
+    .picker { display: flex; align-items: end; gap: 10px; padding: 18px 20px; }
+    .picker-field { flex: 1; min-width: 0; }
+    .picker label, .field label { display: block; margin-bottom: 6px; color: var(--muted); font-size: .75rem; font-weight: 700; }
+    select, .field input { width: 100%; height: 42px; padding: 0 10px; border: 1px solid var(--line); border-radius: 8px; outline: none; background: #171d19; color: var(--ink); }
+    select:focus, .field input:focus { border-color: var(--green); }
+    .add-button { height: 42px; padding: 0 14px; border: 0; border-radius: 8px; background: #315a3b; color: #f5fff6; font-weight: 700; white-space: nowrap; }
+    .add-button:hover:not(:disabled) { background: #3b6b47; }
+    .add-button:disabled { cursor: not-allowed; opacity: .5; }
+    .items { padding: 0 20px; }
+    .item { display: grid; grid-template-columns: minmax(150px, 1.2fr) minmax(95px, .7fr) minmax(115px, .8fr) minmax(145px, 1fr) 38px; align-items: end; gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); }
+    .product-name { min-height: 42px; display: flex; align-items: center; font-weight: 700; }
     .result { min-height: 42px; display: flex; align-items: center; gap: 8px; padding: 0 10px; border-radius: 8px; background: var(--mint); font-weight: 700; white-space: nowrap; }
-    .result .carton-count { color: var(--green); }
+    .carton-count { color: var(--green); }
     .result small { color: var(--muted); font-size: .78rem; }
     .remove-button { width: 38px; height: 38px; margin-bottom: 2px; border: 1px solid var(--line); border-radius: 8px; background: transparent; color: var(--muted); font-size: 1.15rem; }
     .remove-button:hover { background: #422d2b; color: #ffb7a9; }
-    .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 20px 20px; }
+    .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 16px 20px 20px; }
+    .summary[hidden], .items[hidden] { display: none; }
     .summary-card { padding: 13px 15px; border: 1px solid var(--line); border-radius: 10px; background: #1a201c; }
     .summary-card span { display: block; color: var(--muted); font-size: .76rem; font-weight: 650; }
     .summary-card strong { display: block; margin-top: 4px; font-size: 1.4rem; }
     .summary-card.highlight { border-color: #3d5a43; background: var(--mint); }
     .summary-card.highlight strong { color: var(--green); }
+    .site-footer { border-top: 1px solid var(--line); background: #1c221e; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 0; color: var(--muted); font-size: .85rem; }
+    .footer-inner strong { color: var(--ink); font-weight: 650; }
+    .footer-inner a { color: var(--green); text-decoration: none; }
+    .footer-inner a:hover { text-decoration: underline; }
     @media (max-width: 700px) {
       .page { padding-top: 20px; }
       .item { grid-template-columns: 1fr 1fr 38px; gap: 10px; }
@@ -54,64 +65,84 @@
       .summary { grid-template-columns: 1fr; }
     }
     @media (max-width: 430px) {
-      .page { width: calc(100% - 20px); }
+      .header-inner, .page, .footer-inner { width: calc(100% - 20px); }
       .card-head { padding: 15px; }
-      .items { padding: 2px 15px 14px; }
-      .summary { padding: 0 15px 15px; }
-      .add-button { padding: 9px 10px; font-size: .85rem; }
+      .picker { padding: 14px 15px; }
+      .items { padding: 0 15px; }
+      .summary { padding: 14px 15px 15px; }
+      .add-button { padding: 0 10px; font-size: .85rem; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
     }
   </style>
 </head>
 <body>
+  <header class="site-header">
+    <div class="header-inner"><span class="bread-mark" aria-hidden="true">🍞</span><span>Bread Cartons</span></div>
+  </header>
   <main class="page">
-    <div class="topline"><span class="bread-mark" aria-hidden="true">🍞</span> Bread Cartons</div>
     <section class="calculator" aria-labelledby="calculator-title">
-      <header class="card-head">
-        <h1 id="calculator-title">Packing list</h1>
-        <button class="add-button" id="add-item" type="button">＋ Add bread</button>
-      </header>
-      <div class="items" id="items" aria-live="polite"></div>
-      <section class="summary" aria-label="Packing totals">
+      <header class="card-head"><h1 id="calculator-title">Packing list</h1></header>
+      <div class="picker">
+        <div class="picker-field">
+          <label for="bread-select">Choose bread</label>
+          <select id="bread-select"><option value="">Select a bread type…</option></select>
+        </div>
+        <button class="add-button" id="add-item" type="button" disabled>Add</button>
+      </div>
+      <div class="items" id="items" aria-live="polite" hidden></div>
+      <section class="summary" id="summary" aria-label="Packing totals" hidden>
         <div class="summary-card"><span>Total units</span><strong id="total-units">0</strong></div>
         <div class="summary-card highlight"><span>Full cartons</span><strong id="total-cartons">0</strong></div>
         <div class="summary-card"><span>Left over</span><strong id="total-leftover">0</strong></div>
       </section>
     </section>
   </main>
+  <footer class="site-footer">
+    <div class="footer-inner"><strong>Developer: Md Lukman Hussen</strong><a href="mailto:lukmanverse.6@gmail.com">lukmanverse.6@gmail.com</a></div>
+  </footer>
 
   <template id="item-template">
     <div class="item">
-      <div class="field name-field"><label>Product</label><input class="product-name" type="text" placeholder="Bread name" maxlength="50" aria-label="Product name"></div>
-      <div class="field"><label>Units</label><input class="units" type="number" min="0" step="1" inputmode="numeric" placeholder="0" aria-label="Number of units"></div>
-      <div class="field"><label>Per carton</label><input class="capacity" type="number" min="1" step="1" inputmode="numeric" placeholder="24" aria-label="Units per carton"></div>
+      <div class="field name-field"><label>Bread</label><div class="product-name"></div></div>
+      <div class="field"><label>Units</label><input class="units" type="number" min="0" step="1" inputmode="numeric" aria-label="Number of units"></div>
+      <div class="field"><label>Per carton</label><input class="capacity" type="number" min="1" step="1" inputmode="numeric" aria-label="Units per carton"></div>
       <div class="field result-field"><label>Result</label><div class="result"><span class="carton-count">0 cartons</span><small>·</small><span class="leftover-count">0 left</span></div></div>
       <button class="remove-button" type="button" aria-label="Remove bread type">×</button>
     </div>
   </template>
   <script>
     (() => {
-      const STORAGE_KEY = 'bread-carton-calculator-v2';
-      const list = document.querySelector('#items');
-      const template = document.querySelector('#item-template');
-      const defaults = [
-        { name: 'Any Time Bread', capacity: '44' },
-        { name: 'S Bread', capacity: '80' },
-        { name: 'Banana Bread', capacity: '16' },
-        { name: 'Sandwich Bread', capacity: '16' },
-        { name: 'Morning Bread', capacity: '60' },
-        { name: 'Fruit Bread', capacity: '24' },
-        { name: 'White Bread', capacity: '29' },
-        { name: 'XL Bread', capacity: '24' }
+      const products = [
+        { name: 'Any Time Bread', capacity: 44 },
+        { name: 'S Bread', capacity: 80 },
+        { name: 'Banana Bread', capacity: 16 },
+        { name: 'Sandwich Bread', capacity: 16 },
+        { name: 'Morning Bread', capacity: 60 },
+        { name: 'Fruit Bread', capacity: 24 },
+        { name: 'White Bread', capacity: 29 },
+        { name: 'XL Bread', capacity: 24 }
       ];
+      const list = document.querySelector('#items');
+      const summary = document.querySelector('#summary');
+      const select = document.querySelector('#bread-select');
+      const addButton = document.querySelector('#add-item');
+      const template = document.querySelector('#item-template');
       const number = value => Math.max(0, Math.floor(Number(value) || 0));
 
-      function save() {
-        const data = [...list.querySelectorAll('.item')].map(row => ({
-          name: row.querySelector('.product-name').value,
-          units: row.querySelector('.units').value,
-          capacity: row.querySelector('.capacity').value
-        }));
-        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch (_) { /* Storage may be unavailable. */ }
+      products.forEach((product, index) => {
+        const option = document.createElement('option');
+        option.value = String(index);
+        option.textContent = `${product.name} — ${product.capacity} per carton`;
+        select.append(option);
+      });
+
+      function updatePicker() {
+        const selected = new Set([...list.querySelectorAll('.item')].map(row => row.dataset.product));
+        [...select.options].forEach(option => {
+          if (option.value) option.disabled = selected.has(option.value);
+        });
+        if (select.value && selected.has(select.value)) select.value = '';
+        addButton.disabled = select.value === '';
       }
 
       function calculate() {
@@ -129,50 +160,39 @@
           totalCartons += cartons;
           totalLeftover += leftover;
         });
+        const hasItems = list.querySelector('.item') !== null;
+        list.hidden = !hasItems;
+        summary.hidden = !hasItems;
         document.querySelector('#total-units').textContent = totalUnits.toLocaleString();
         document.querySelector('#total-cartons').textContent = totalCartons.toLocaleString();
         document.querySelector('#total-leftover').textContent = totalLeftover.toLocaleString();
-        save();
+        updatePicker();
       }
 
-      function addItem(data = {}) {
+      function addProduct(index) {
+        const product = products[index];
+        if (!product || list.querySelector(`[data-product="${index}"]`)) return;
         const row = template.content.firstElementChild.cloneNode(true);
-        row.querySelector('.product-name').value = data.name ?? '';
-        row.querySelector('.units').value = data.units ?? '1';
-        row.querySelector('.capacity').value = data.capacity ?? '';
+        row.dataset.product = String(index);
+        row.querySelector('.product-name').textContent = product.name;
+        row.querySelector('.units').value = '1';
+        row.querySelector('.capacity').value = String(product.capacity);
         row.addEventListener('input', calculate);
         row.querySelector('.remove-button').addEventListener('click', () => {
           row.remove();
-          if (!list.querySelector('.item')) addItem();
           calculate();
         });
         list.append(row);
-      }
-
-      function loadItems() {
-        let saved = null;
-        try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch (_) { /* Use defaults if saved data is invalid. */ }
-        if (!Array.isArray(saved)) {
-          let oldSaved = null;
-          try { oldSaved = JSON.parse(localStorage.getItem('bread-carton-calculator-v1') || 'null'); } catch (_) { /* Ignore invalid previous data. */ }
-          saved = Array.isArray(oldSaved) ? oldSaved : [];
-        }
-        const items = [...saved];
-        defaults.forEach(product => {
-          const existing = items.find(item => (item.name || '').trim().toLowerCase() === product.name.toLowerCase());
-          if (existing) existing.capacity = product.capacity;
-          else items.push({ ...product, units: '1' });
-        });
-        items.forEach(addItem);
         calculate();
       }
 
-      document.querySelector('#add-item').addEventListener('click', () => {
-        addItem();
-        calculate();
-        list.lastElementChild.querySelector('.product-name').focus();
+      select.addEventListener('change', updatePicker);
+      addButton.addEventListener('click', () => {
+        if (select.value === '') return;
+        addProduct(Number(select.value));
+        select.value = '';
+        updatePicker();
       });
-      loadItems();
     })();
   </script>
 </body>
