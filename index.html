@@ -57,12 +57,12 @@
     .result small { color: var(--muted); font-size: .78rem; }
     .remove-button { width: 36px; height: 36px; margin-bottom: 2px; border: 1px solid var(--line); border-radius: 8px; background: #f8fafd; color: var(--muted); font-size: 1.1rem; }
     .remove-button:hover { border-color: #e4b7c0; background: #fff4f5; color: #a63d54; }
-    .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-top: 30px; padding: 14px 20px 18px; }
+    .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 30px 20px 18px; padding: 15px; border: 1px solid #b9cde3; border-radius: 13px; background: #dce8f6; box-shadow: 0 5px 16px #34557812; }
     .summary[hidden], .items[hidden] { display: none; }
-    .summary-card { padding: 11px 14px; border: 1px solid var(--line); border-radius: 9px; background: #f1f5fa; }
+    .summary-card { min-width: 0; padding: 12px 14px; border: 1px solid #c6d6e8; border-radius: 9px; background: #f1f5fa; }
     .summary-card span { display: block; color: var(--muted); font-size: .75rem; font-weight: 650; }
     .summary-card strong { display: block; margin-top: 4px; font-size: 1.3rem; }
-    .summary-card.highlight { border-color: #c0d3e9; background: var(--blue-soft); }
+    .summary-card.highlight { border-color: #a9c5e4; background: #e7f0fb; }
     .summary-card.highlight strong { color: var(--blue); }
     .site-footer { border-top: 1px solid var(--line); background: #e9eff6; }
     .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 9px 0 8px; text-align: center; }
@@ -80,7 +80,7 @@
       .item .result-field { grid-column: 3; grid-row: 2; }
       .item .remove-button { grid-column: 4; grid-row: 1; align-self: start; margin: 0; }
       .result { flex-direction: row; flex-wrap: nowrap; gap: 6px; padding: 0 7px; font-size: .82rem; }
-      .summary { grid-template-columns: 1fr; margin-top: 30px; }
+      .summary { grid-template-columns: 1fr; margin: 30px 14px 14px; padding: 12px; }
     }
     @media (max-width: 480px) {
       .header-inner, .page, .footer-inner { width: calc(100% - 22px); }
@@ -89,7 +89,6 @@
       .card-head { padding: 14px; }
       .picker { padding: 13px 14px 15px; }
       .items { padding: 0 14px; }
-      .summary { margin-top: 30px; padding: 12px 14px 14px; }
       .product-options { gap: 7px; }
       .product-option { min-height: 54px; gap: 8px; padding: 7px; }
       .option-name { font-size: .8rem; }
