@@ -44,8 +44,8 @@
     .add-button { min-height: 40px; padding: 0 15px; border: 0; border-radius: 8px; background: var(--blue-strong); color: #fff; font-weight: 750; transition: background .15s, transform .15s; }
     .add-button:hover:not(:disabled) { background: #2868b5; transform: translateY(-1px); }
     .add-button:disabled { cursor: not-allowed; opacity: .45; }
-    .items { padding: 0 20px; }
-    .item { display: grid; grid-template-columns: minmax(150px, 1.2fr) minmax(95px, .7fr) minmax(115px, .8fr) minmax(145px, 1fr) 38px; align-items: end; gap: 11px; padding: 12px 0; border-top: 1px solid var(--line); }
+    .items { display: flex; flex-direction: column; gap: 10px; padding: 14px 20px 0; }
+    .item { display: grid; grid-template-columns: minmax(150px, 1.2fr) minmax(95px, .7fr) minmax(115px, .8fr) minmax(145px, 1fr) 38px; align-items: end; gap: 11px; padding: 14px; border: 1px solid #c6d6e8; border-radius: 12px; background: #f1f5fa; box-shadow: 0 4px 12px #34557812; }
     .field { min-width: 0; }
     .field label { display: block; margin-bottom: 5px; color: var(--muted); font-size: .72rem; font-weight: 700; }
     .field input { width: 100%; height: 40px; padding: 0 10px; border: 1px solid #c3d0df; border-radius: 8px; outline: none; background: #fff; color: var(--ink); }
@@ -88,7 +88,7 @@
       .page { padding-top: 13px; padding-bottom: 20px; }
       .card-head { padding: 14px; }
       .picker { padding: 13px 14px 15px; }
-      .items { padding: 0 14px; }
+      .items { padding: 12px 14px 0; }
       .product-options { gap: 7px; }
       .product-option { min-height: 54px; gap: 8px; padding: 7px; }
       .option-name { font-size: .8rem; }
@@ -98,7 +98,7 @@
     @media (max-width: 360px) {
       .product-options { grid-template-columns: 1fr; }
       .picker-actions .add-button { width: 100%; }
-      .item { grid-template-columns: minmax(0, .9fr) minmax(0, .9fr) minmax(0, 1.2fr) 32px; gap: 6px; }
+      .item { grid-template-columns: minmax(0, .9fr) minmax(0, .9fr) minmax(0, 1.2fr) 32px; gap: 6px; padding: 10px; }
       .result { gap: 4px; padding: 0 5px; font-size: .74rem; }
       .field label { font-size: .66rem; }
     }
@@ -134,7 +134,7 @@
 
   <template id="item-template">
     <div class="item">
-      <div class="field name-field"><label>Bread</label><div class="product-name"></div></div>
+      <div class="field name-field"><div class="product-name"></div></div>
       <div class="field units-field"><label>Units</label><input class="units" type="number" min="0" step="1" inputmode="numeric" aria-label="Number of units"></div>
       <div class="field capacity-field"><label>Per carton</label><div class="capacity-value"></div></div>
       <div class="field result-field"><label>Result</label><div class="result"><span class="carton-count">0 cartons</span><small>·</small><span class="leftover-count">0 left</span></div></div>
